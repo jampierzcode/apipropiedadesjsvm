@@ -70,6 +70,25 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     $data = json_decode(file_get_contents("php://input"), true);
 
     echo $controller->login($data);
+    // DISEÑO WEB
+} elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'configwebbybusiness') {
+    if (isset($uri[2])) {
+
+        echo $configController->getWebDataByBusiness($uri[2]);
+    } else {
+        echo json_encode(['message' => "Error en la consulta, falta un parametro"]);
+    }
+} elseif ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'configweb') {
+    $user_data = authenticate();
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    echo $configController->createConfigWeb($data);
+} elseif ($request_method == 'PUT' && $uri[0] == 'api' && $uri[1] == 'configwebbybusiness') {
+    $user_data = authenticate();
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    echo $configController->updateConfigWebByBusiness($data);
+    // }
     // BSINESS
 } elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'businessbyuser') {
     if (isset($uri[2])) {

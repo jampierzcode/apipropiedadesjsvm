@@ -35,6 +35,12 @@ class UploadImgController
             move_uploaded_file($imageBusiness["tmp_name"], $businessImagePath);
             $response['url'] = $baseUrl . $businessImagePath;
         }
+        if (isset($_FILES['imageWebPortada'])) {
+            $imageWebPortada = $_FILES['imageWebPortada'];
+            $portadaWebImagePath = $targetDir . uniqid() . '-' .  basename($imageWebPortada["name"]);
+            move_uploaded_file($imageWebPortada["tmp_name"], $portadaWebImagePath);
+            $response['url'] = $baseUrl . $portadaWebImagePath;
+        }
         if (isset($_FILES['galleryImages'])) {
             $galleryImages = $_FILES['galleryImages'];
             foreach ($galleryImages['tmp_name'] as $index => $tmpName) {
