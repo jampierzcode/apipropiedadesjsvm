@@ -12,7 +12,7 @@ use Firebase\JWT\Key;
 
 // CORS headers
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Origin: https://app.maicolbohorquez.com");
+// header("Access-Control-Allow-Origin: https://app.maicolbohorquez.com");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
@@ -162,6 +162,17 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     $data = json_decode(file_get_contents("php://input"), true);
     // echo print_r($data);
     echo $propertyController->createAmenidadProperty($data);
+} elseif ($request_method == 'PUT' && $uri[0] == 'api' && $uri[1] == 'amenidadespropiedades') {
+    $user_data = authenticate();
+    $data = json_decode(file_get_contents("php://input"), true);
+    // echo print_r($data);
+    echo $propertyController->updateAmenidadProperty($data);
+} elseif ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'deleteamenidadespropiedades') {
+   
+    $user_data = authenticate();
+    $data = json_decode(file_get_contents("php://input"), true);
+    // echo print_r($data);
+    echo $propertyController->deleteAmenidadProperty($data);
 } elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'modelosbypropiedad') {
 
     if (isset($uri[2])) {

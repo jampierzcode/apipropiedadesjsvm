@@ -61,6 +61,16 @@ class PropiedadController
         $property = new Propiedades($this->db);
         return $property->createAmenidades($data);
     }
+    public function updateAmenidadProperty($data)
+    {
+        $property = new Propiedades($this->db);
+        return $property->updateAmenidades($data);
+    }
+    public function deleteAmenidadProperty($data)
+    {
+        $property = new Propiedades($this->db);
+        return $property->deleteAmenidades($data);
+    }
     public function getModelosByProperty($id)
     {
         $property = new Propiedades($this->db);
@@ -83,11 +93,7 @@ class PropiedadController
     {
         $property = new Propiedades($this->db);
         $property->id = $id;
-        if ($property->update($data)) {
-            return json_encode(['message' => 'Property updated successfully']);
-        } else {
-            return json_encode(['message' => 'Property update failed']);
-        }
+        return $property->update($data);
     }
 
     public function deleteProperty($id)

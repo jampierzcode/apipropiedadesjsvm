@@ -176,6 +176,48 @@ class Propiedades
             return $success;
         }
     }
+    public function updateAmenidades($data)
+    {
+        try {
+            //code...
+            $query = "UPDATE propiedad_amenidad set propiedad_id=?, amenidad=? WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            foreach ($data as $amenidad) {
+                # code...
+                $stmt->execute([
+                    $amenidad['propiedad_id'],
+                    $amenidad['amenidad'],
+                    $amenidad['id']
+                ]);
+            }
+            $success = json_encode(['message' => 'update']);
+            return $success;
+        } catch (\Throwable $error) {
+            //throw $th;
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
+        }
+    }
+    public function deleteAmenidades($data)
+    {
+        try {
+            //code...
+            $query = "DELETE FROM propiedad_amenidad WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            foreach ($data as $amenidad) {
+                # code...
+                $stmt->execute([
+                    $amenidad['id']
+                ]);
+            }
+            $success = json_encode(['message' => 'delete']);
+            return $success;
+        } catch (\Throwable $error) {
+            //throw $th;
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
+        }
+    }
     public function readModelosByPropiedad($id)
     {
         $query = "SELECT * FROM propiedad_modelos WHERE propiedad_id=?";
@@ -245,19 +287,49 @@ class Propiedades
 
     public function update($data)
     {
-        $query = "UPDATE " . $this->table_name . " SET name=:name, location=:location, price=:price WHERE id=:id";
-        $stmt = $this->conn->prepare($query);
+        try {
+            //code...
+            $query = "UPDATE " . $this->table_name . " SET 
+            nombre = ?, tipo = ?, purpose = ?, descripcion = ?, video_descripcion = ?, link_extra = ?, region = ?, provincia = ?, distrito = ?, exactAddress = ?, postalcode = ?, position_locate = ?, area_from = ?, area_const_from = ?, precio_from = ?, moneda = ?, etapa = ?, fecha_entrega = ?, fecha_captacion = ?, fecha_created = ?, financiamiento = ?, created_by = ?, status = ?, name_reference = ? WHERE id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                $data['nombre'],
+                $data['tipo'],
+                $data['purpose'],
+                $data['descripcion'],
+                $data['video_descripcion'],
+                $data['link_extra'],
+                $data['region'],
+                $data['provincia'],
+                $data['distrito'],
+                $data['exactAddress'],
+                $data['postalcode'],
+                $data['position_locate'],
+                $data['area_from'],
+                $data['area_const_from'],
+                $data['precio_from'],
+                $data['moneda'],
+                $data['etapa'],
+                $data['fecha_entrega'],
+                $data['fecha_captacion'],
+                $data['fecha_created'],
+                $data['financiamiento'],
+                $data['created_by'],
+                $data['status'],
+                $data['name_reference'],
+                $this->id,
+            ]);
 
-        // $stmt->bindParam(":name", $this->name);
-        // $stmt->bindParam(":location", $this->location);
-        // $stmt->bindParam(":price", $this->price);
-        // $stmt->bindParam(":id", $this->id);
-
-        if ($stmt->execute()) {
-            return true;
+            // $stmt->bindParam(":name", $this->name);
+            // $stmt->bindParam(":location", $this->location);
+            // $stmt->bindParam(":price", $this->price);
+            $stmt->bindParam(":id", $this->id);
+            $success = json_encode(['message' => 'update']);
+            return $success;
+        } catch (\Throwable $error) {
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
         }
-
-        return false;
     }
 
     public function delete()
