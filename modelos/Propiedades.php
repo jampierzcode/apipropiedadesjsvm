@@ -39,7 +39,7 @@ class Propiedades
 
     public function read()
     {
-        $query = "SELECT p.*, pm.categoria, pm.url_file, pm.etiqueta, pr.name as region_name, pv.name as provincia_name, pd.name as distrito_name FROM " . $this->table_name . " p  inner join propiedad_multimedia pm on p.id=pm.propiedad_id inner join ubigeo_peru_departments pr on p.region=pr.id inner join ubigeo_peru_provinces pv on p.provincia=pv.id inner join ubigeo_peru_districts pd on p.distrito=pd.id WHERE pm.etiqueta='Portada'";
+        $query = "SELECT p.*, pm.categoria, pm.url_file, pm.etiqueta, pr.name as region_name, pv.name as provincia_name, pd.name as distrito_name FROM " . $this->table_name . " p  left join propiedad_multimedia pm on p.id=pm.propiedad_id  AND pm.etiqueta = 'Portada' inner join ubigeo_peru_departments pr on p.region=pr.id inner join ubigeo_peru_provinces pv on p.provincia=pv.id inner join ubigeo_peru_districts pd on p.distrito=pd.id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -47,7 +47,7 @@ class Propiedades
 
     public function readOne()
     {
-        $query = "SELECT p.*, pm.categoria, pm.url_file, pm.etiqueta, pr.name as region_name, pv.name as provincia_name, pd.name as distrito_name FROM " . $this->table_name . "  p  inner join propiedad_multimedia pm on p.id=pm.propiedad_id inner join ubigeo_peru_departments pr on p.region=pr.id inner join ubigeo_peru_provinces pv on p.provincia=pv.id inner join ubigeo_peru_districts pd on p.distrito=pd.id WHERE p.id = ?";
+        $query = "SELECT p.*, pm.categoria, pm.url_file, pm.etiqueta, pr.name as region_name, pv.name as provincia_name, pd.name as distrito_name FROM " . $this->table_name . "  p  left join propiedad_multimedia pm on p.id=pm.propiedad_id inner join ubigeo_peru_departments pr on p.region=pr.id inner join ubigeo_peru_provinces pv on p.provincia=pv.id inner join ubigeo_peru_districts pd on p.distrito=pd.id WHERE p.id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $this->id);
         $stmt->execute();
@@ -58,10 +58,11 @@ class Propiedades
     {
         try {
             //code...
-            $query = "INSERT INTO " . $this->table_name . "(nombre, tipo, purpose, descripcion, video_descripcion, link_extra, region, provincia, distrito, exactAddress, postalcode, position_locate, area_from, area_const_from, precio_from, moneda, etapa, fecha_entrega, fecha_captacion, fecha_created, financiamiento, created_by, status, name_reference) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $query = "INSERT INTO " . $this->table_name . "(logo, nombre, tipo, purpose, descripcion, video_descripcion, link_extra, region, provincia, distrito, exactAddress, postalcode, position_locate, area_from, area_const_from, precio_from, moneda, etapa, fecha_entrega, fecha_captacion, fecha_created, financiamiento, created_by, status, name_reference) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($query);
 
             $stmt->execute([
+                $data['logo'],
                 $data['nombre'],
                 $data['tipo'],
                 $data['purpose'],

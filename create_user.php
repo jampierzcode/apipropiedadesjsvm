@@ -7,8 +7,8 @@ $database = new Database();
 $db = $database->getConnection();
 
 $cliente_id = 1;
-$email = "admin@api.com";
-$password = "jampieradmin"; // Cambia esto por la contraseña deseada
+$email = "Juampi0070";
+$password = "20091722"; // Cambia esto por la contraseña deseada
 
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
