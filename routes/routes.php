@@ -11,8 +11,9 @@ use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
 // CORS headers
-header("Access-Control-Allow-Origin: http://localhost:3000");
-// header("Access-Control-Allow-Origin: https://app.maicolbohorquez.com");
+// header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Origin: https://app.maicolbohorquez.com");
+header("Access-Control-Allow-Origin: https://tuvivienda.tuviviendaya.com");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
