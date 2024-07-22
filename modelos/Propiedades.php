@@ -220,7 +220,7 @@ class Propiedades
     }
     public function readModelosByPropiedad($id)
     {
-        $query = "SELECT * FROM propiedad_modelos WHERE propiedad_id=?";
+        $query = "SELECT pm.*, p.nombre as nombre_propiedad, p.purpose as proposito_propiedad FROM propiedad_modelos pm inner join propiedades p on pm.propiedad_id=p.id WHERE propiedad_id=?";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
@@ -258,6 +258,43 @@ class Propiedades
             $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
             return $success;
         }
+    }
+    public function updateModel($id, $data)
+    {
+        try {
+            //code...
+            $query = "UPDATE propiedad_modelos
+        SET nombre = ?, categoria = ?, precio = ?, area = ?, imagenUrl = ?, habs = ?, garage = ?, banios = ?, moneda = ?, etapa = ?
+        WHERE id = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                $data['nombre'],
+                $data['categoria'],
+                $data['precio'],
+                $data['area'],
+                $data['imagenUrl'],
+                $data['habs'],
+                $data['garage'],
+                $data['banios'],
+                $data['moneda'],
+                $data['etapa'],
+                $id,
+            ]);
+            $success = json_encode(['message' => 'update']);
+            return $success;
+        } catch (\Throwable $error) {
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
+        }
+    }
+    public function readUnidadesModelo($id)
+    {
+        $ids = [];
+        $query = "SELECT * FROM modelos_unidades WHERE modelo_id=?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        return $stmt;
     }
     public function createUnidadesModelos($data)
     {
@@ -331,6 +368,7 @@ class Propiedades
             return $success;
         }
     }
+
 
     public function delete()
     {

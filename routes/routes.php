@@ -168,7 +168,7 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     // echo print_r($data);
     echo $propertyController->updateAmenidadProperty($data);
 } elseif ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'deleteamenidadespropiedades') {
-   
+
     $user_data = authenticate();
     $data = json_decode(file_get_contents("php://input"), true);
     // echo print_r($data);
@@ -185,6 +185,17 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     $data = json_decode(file_get_contents("php://input"), true);
     // echo print_r($data);
     echo $propertyController->createModelosProperty($data);
+} elseif ($request_method == 'PUT' && $uri[0] == 'api' && $uri[1] == 'updatemodelo' && isset($uri[2])) {
+    $user_data = authenticate();
+    $data = json_decode(file_get_contents("php://input"), true);
+    echo $propertyController->updateModelo($uri[2], $data);
+} elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'unidadesbymodelo') {
+
+    if (isset($uri[2])) {
+        echo $propertyController->getUnidadesModelo($uri[2]);
+    } else {
+        echo json_encode(['message' => 'Te falta parametros del ID del departamento']);
+    }
 } elseif ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'unidadesModelos') {
     $user_data = authenticate();
     $data = json_decode(file_get_contents("php://input"), true);

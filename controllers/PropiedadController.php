@@ -71,6 +71,12 @@ class PropiedadController
         $property = new Propiedades($this->db);
         return $property->deleteAmenidades($data);
     }
+    public function updateModelo($id, $data)
+    {
+        $property = new Propiedades($this->db);
+
+        return $property->updateModel($id, $data);
+    }
     public function getModelosByProperty($id)
     {
         $property = new Propiedades($this->db);
@@ -88,6 +94,13 @@ class PropiedadController
         $property = new Propiedades($this->db);
         return $property->createUnidadesModelos($data);
     }
+    public function getUnidadesModelo($id)
+    {
+        $property = new Propiedades($this->db);
+        $stmt = $property->readUnidadesModelo($id);
+        $property = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return json_encode($property);
+    }
 
     public function updateProperty($id, $data)
     {
@@ -95,6 +108,7 @@ class PropiedadController
         $property->id = $id;
         return $property->update($data);
     }
+
 
     public function deleteProperty($id)
     {
