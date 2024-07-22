@@ -220,7 +220,11 @@ class Propiedades
     }
     public function readModelosByPropiedad($id)
     {
-        $query = "SELECT pm.*, p.nombre as nombre_propiedad, p.purpose as proposito_propiedad FROM propiedad_modelos pm inner join propiedades p on pm.propiedad_id=p.id WHERE propiedad_id=?";
+        $query = "SELECT pm.*, p.nombre as nombre_propiedad, p.purpose as proposito_propiedad,    COALESCE(COUNT(u.id), 0) AS cantidad_unidades_totales,
+    COALESCE(SUM(CASE WHEN u.status = 'Disponible' THEN 1 ELSE 0 END), 0) AS cantidad_unidades_disponibles
+ FROM propiedad_modelos pm inner join propiedades p on pm.propiedad_id=p.id LEFT JOIN 
+    modelos_unidades u ON pm.id = u.modelo_id WHERE pm.propiedad_id=? GROUP BY 
+    pm.id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(1, $id);
         $stmt->execute();
