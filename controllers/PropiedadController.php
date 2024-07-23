@@ -56,6 +56,16 @@ class PropiedadController
         $property = new Propiedades($this->db);
         return $property->createMultimedia($data);
     }
+    public function updateMultimediaProperty($data)
+    {
+        $property = new Propiedades($this->db);
+        return $property->updateMultimedia($data);
+    }
+    public function deleteMultimediaProperty($data)
+    {
+        $property = new Propiedades($this->db);
+        return $property->deleteMultimedia($data);
+    }
     public function createAmenidadProperty($data)
     {
         $property = new Propiedades($this->db);

@@ -88,6 +88,37 @@ class UploadImgController
 
         return json_encode($response);
     }
+    public function deleteFiles($data)
+    {
+        $response = [];
+        // $response = ['deleted' => [], 'not_found' => []];
+
+        if (!isset($data["imagenesDelete"]) || !is_array($data["imagenesDelete"])) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Falta el array de URLs de imágenes']);
+            exit();
+        }
+
+        $imagenesDelete = $data["imagenesDelete"];
+
+        foreach ($imagenesDelete as $imageUrl) {
+            $imagePath = parse_url($imageUrl, PHP_URL_PATH);
+            $fullImagePath = $_SERVER['DOCUMENT_ROOT'] . $imagePath;
+
+            if (file_exists($fullImagePath)) {
+                unlink($fullImagePath);
+                // $response['deleted'][] = $imageUrl;
+            }
+            //  else {
+            //     $response['not_found'][] = $imageUrl;
+            // }
+        }
+        $response = ['message' => 'remove'];
+
+        http_response_code(200);
+        return json_encode($response);
+    }
+
 
     private function getBaseUrl()
     {

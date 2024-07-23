@@ -132,7 +132,7 @@ class Propiedades
         try {
             //code...
             $ids = [];
-            $query = "INSERT INTO propiedad_multimedia(categoria, url_file, propiedad_id, etiqueta) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO propiedad_multimedia(categoria, url_file, propiedad_id, etiqueta, indice) VALUES (?, ?, ?, ?, ?)";
             $stmt = $this->conn->prepare($query);
             foreach ($data as $multimedia) {
                 # code...
@@ -140,12 +140,58 @@ class Propiedades
                     $multimedia['categoria'],
                     $multimedia['url_file'],
                     $multimedia['propiedad_id'],
-                    $multimedia['etiqueta']
+                    $multimedia['etiqueta'],
+                    $multimedia['indice']
                 ]);
                 $multimedia_id = $this->conn->lastInsertId();
                 $ids[] = $multimedia_id;
             }
             $success = json_encode(['message' => 'add', "ids" => $ids]);
+            return $success;
+        } catch (\Throwable $error) {
+            //throw $th;
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
+        }
+    }
+    public function updateMultimedia($data)
+    {
+        try {
+            //code...
+            $query = "UPDATE propiedad_multimedia SET categoria = ?, url_file = ?, propiedad_id = ?, etiqueta = ?, indice = ? WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            foreach ($data as $multimedia) {
+                # code...
+                $stmt->execute([
+                    $multimedia['categoria'],
+                    $multimedia['url_file'],
+                    $multimedia['propiedad_id'],
+                    $multimedia['etiqueta'],
+                    $multimedia['indice'],
+                    $multimedia['id']
+                ]);
+            }
+            $success = json_encode(['message' => 'update']);
+            return $success;
+        } catch (\Throwable $error) {
+            //throw $th;
+            $success = json_encode(['message' => 'error', "error" => $error->getMessage()]);
+            return $success;
+        }
+    }
+    public function deleteMultimedia($data)
+    {
+        try {
+            //code...
+            $query = "DELETE FROM propiedad_multimedia WHERE id=?";
+            $stmt = $this->conn->prepare($query);
+            foreach ($data as $multimedia) {
+                # code...
+                $stmt->execute([
+                    $multimedia['id']
+                ]);
+            }
+            $success = json_encode(['message' => 'delete']);
             return $success;
         } catch (\Throwable $error) {
             //throw $th;
