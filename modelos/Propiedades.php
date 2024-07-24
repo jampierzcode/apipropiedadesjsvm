@@ -378,9 +378,10 @@ class Propiedades
         try {
             //code...
             $query = "UPDATE " . $this->table_name . " SET 
-            nombre = ?, tipo = ?, purpose = ?, descripcion = ?, video_descripcion = ?, link_extra = ?, region = ?, provincia = ?, distrito = ?, exactAddress = ?, postalcode = ?, position_locate = ?, area_from = ?, area_const_from = ?, precio_from = ?, moneda = ?, etapa = ?, fecha_entrega = ?, fecha_captacion = ?, fecha_created = ?, financiamiento = ?, created_by = ?, status = ?, name_reference = ? WHERE id = ?";
+            logo= ?, nombre = ?, tipo = ?, purpose = ?, descripcion = ?, video_descripcion = ?, link_extra = ?, region = ?, provincia = ?, distrito = ?, exactAddress = ?, postalcode = ?, position_locate = ?, area_from = ?, area_const_from = ?, precio_from = ?, moneda = ?, etapa = ?, fecha_entrega = ?, fecha_captacion = ?, fecha_created = ?, financiamiento = ?, created_by = ?, status = ?, name_reference = ? WHERE id = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->execute([
+                $data['logo'],
                 $data['nombre'],
                 $data['tipo'],
                 $data['purpose'],
