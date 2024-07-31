@@ -229,8 +229,7 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     echo $propertyController->updateProperty($uri[2], $data);
 } elseif ($request_method == 'DELETE' && $uri[0] == 'api' && $uri[1] == 'propiedades' && isset($uri[2])) {
     $user_data = authenticate();
-    $data = json_decode(file_get_contents("php://input"), true);
-    echo $propertyController->deleteProperty($uri[2], $data);
+    echo $propertyController->deleteProperty($uri[2]);
     // GEO LOCALIZACION
 } elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'departamentos') {
 

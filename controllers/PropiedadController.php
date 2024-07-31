@@ -125,9 +125,9 @@ class PropiedadController
         $property = new Propiedades($this->db);
         $property->id = $id;
         if ($property->delete()) {
-            return json_encode(['message' => 'Property deleted successfully']);
+            return json_encode(['message' => 'delete']);
         } else {
-            return json_encode(['message' => 'Property deletion failed']);
+            return json_encode(['message' => 'no-delete']);
         }
     }
 }
