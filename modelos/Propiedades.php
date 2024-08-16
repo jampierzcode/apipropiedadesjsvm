@@ -277,6 +277,14 @@ class Propiedades
         $stmt->execute();
         return $stmt;
     }
+    public function readModelo($id)
+    {
+        $query = "SELECT * FROM propiedad_modelos WHERE id=?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        return $stmt;
+    }
     public function createModelos($data)
     {
         try {

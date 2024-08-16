@@ -189,12 +189,19 @@ if ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'register') {
     $data = json_decode(file_get_contents("php://input"), true);
     // echo print_r($data);
     echo $propertyController->deleteAmenidadProperty($data);
+} elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'modelos') {
+
+    if (isset($uri[2])) {
+        echo $propertyController->getModelo($uri[2]);
+    } else {
+        echo json_encode(['message' => 'Te falta parametros del ID del modelo']);
+    }
 } elseif ($request_method == 'GET' && $uri[0] == 'api' && $uri[1] == 'modelosbypropiedad') {
 
     if (isset($uri[2])) {
         echo $propertyController->getModelosByProperty($uri[2]);
     } else {
-        echo json_encode(['message' => 'Te falta parametros del ID del departamento']);
+        echo json_encode(['message' => 'Te falta parametros del ID de la propiedad']);
     }
 } elseif ($request_method == 'POST' && $uri[0] == 'api' && $uri[1] == 'modelospropiedades') {
     $user_data = authenticate();

@@ -94,6 +94,13 @@ class PropiedadController
         $property = $stmt->fetchAll(\PDO::FETCH_ASSOC);
         return json_encode($property);
     }
+    public function getModelo($id)
+    {
+        $property = new Propiedades($this->db);
+        $stmt = $property->readModelo($id);
+        $property = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return json_encode($property);
+    }
     public function createModelosProperty($data)
     {
         $property = new Propiedades($this->db);
